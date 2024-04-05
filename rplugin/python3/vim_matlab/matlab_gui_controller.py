@@ -6,7 +6,7 @@ import re
 import pyperclip
 
 from input_controller import disable_input
-from io_helper import find_plugin_matlab_path
+from vim_matlab.io_helper import find_plugin_matlab_path
 from xdotool import Xdotool
 
 """

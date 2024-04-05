@@ -1,5 +1,5 @@
 from command import Command
-from logger import log
+from vim_matlabvim_matlab..logger import log
 
 __author__ = 'daeyun'
 

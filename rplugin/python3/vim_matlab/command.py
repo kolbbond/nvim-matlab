@@ -1,8 +1,7 @@
 import subprocess
 import threading
 
-import logger
-
+import vim_matlab.logger as logger
 
 __author__ = 'daeyun'
 

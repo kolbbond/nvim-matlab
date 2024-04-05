@@ -2,7 +2,8 @@ setlocal shortmess+=A
 setlocal formatoptions-=cro
 
 if !exists('g:matlab_server_launcher')
-  let g:matlab_server_launcher = 'vim'
+  "let g:matlab_server_launcher = 'vim'
+  let g:matlab_server_launcher = 'tmux'
 endif
 
 if !exists('g:matlab_server_split')
