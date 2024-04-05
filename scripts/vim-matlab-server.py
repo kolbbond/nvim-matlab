@@ -56,19 +56,21 @@ class Matlab:
         except:
             pass
 
-# send code to Matlab, run_timer adds extra output
+    # send code to Matlab, run_timer adds extra output
     def run_code(self, code, run_timer=False):
         num_retry = 0
         rand_var = ''.join(
-            random.choice(string.ascii_uppercase) for _ in range(12))
+                random.choice(string.ascii_uppercase) for _ in range(12))
 
+        # this runs a timer for each matlab code
+        # can we separate to avoid convolution of our command line
         if run_timer:
             command = ("{randvar}=tic;{code},try,toc({randvar}),catch,end"
                        ",clear('{randvar}');\n").format(randvar=rand_var,
                                                         code=code.strip())
         else:
             # @hey, some error here with terminating strings ...
-            #print('test')
+            # print('test')
             command = "{}\n".format(code.strip())
 
         # The maximum number of characters allowed on a single line in Matlab's CLI is 4096.
@@ -103,6 +105,7 @@ class TCPHandler(socketserver.StreamRequestHandler):
             if not msg:
                 break
             msg = msg.strip().decode("utf-8")
+            # why is this 74? @hey
             print_flush((msg[:74] + '...') if len(msg) > 74 else msg, end='')
 
             options = {

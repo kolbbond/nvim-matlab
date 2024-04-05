@@ -1,3 +1,6 @@
+" these are vimscript command remaps
+" @hey, move these to lua
+
 setlocal shortmess+=A
 setlocal formatoptions-=cro
 
@@ -23,6 +26,7 @@ let s:server_command = expand('<sfile>:p:h') . '/../../scripts/vim-matlab-server
 
 command! MatlabLaunchServer :execute 'normal! ' . s:split_command . s:server_command . '<CR>'
 
+" @hey, is this the override of <CR> to run cell
 command! MatlabNormalModeCreateCell :execute 'normal! :set paste<CR>m`O%%<ESC>``:set nopaste<CR>'
 command! MatlabVisualModeCreateCell :execute 'normal! gvD:set paste<CR>O%%<CR>%%<ESC>P:set nopaste<CR>'
 command! MatlabInsertModeCreateCell :execute 'normal! I%% '
@@ -31,9 +35,11 @@ if !exists('g:matlab_auto_mappings')
   let g:matlab_auto_mappings = 1
 endif
 
+" move these to lua plugin setup
 if g:matlab_auto_mappings
   nnoremap <buffer>         <leader>rn :MatlabRename
   nnoremap <buffer><silent> <leader>fn :MatlabFixName<CR>
+  nnoremap <buffer><silent> <leader>mf :MatlabCliRunFile<CR>
   vnoremap <buffer><silent> <C-m> <ESC>:MatlabCliRunSelection<CR>
   nnoremap <buffer><silent> <C-m> <ESC>:MatlabCliRunCell<CR>
   nnoremap <buffer><silent> <C-h> :MatlabCliRunLine<CR>

@@ -8,7 +8,7 @@ import collections
 
 import neovim
 
-# update here for 2023 support 
+# update here for 2023 support
 from vim_matlab.matlab_cli_controller import MatlabCliController
 from vim_matlab.python_vim_utils import PythonVimUtils as vim_helper
 import vim_matlab.python_vim_utils
@@ -21,6 +21,7 @@ __email__ = "daeyun@daeyunshin.com"
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 
 @neovim.plugin
 class VimMatlab(object):
@@ -73,6 +74,16 @@ class VimMatlab(object):
         lines = vim_helper.get_current_matlab_cell_lines(
             ignore_matlab_comments=True)
         self.cli_controller.run_code(lines)
+
+    # @hey, command to run entire matlab file
+    @neovim.command('MatlabCliRunFile', sync=True)
+    def matlab_cli_run_file(self):
+        if self.cli_controller is None:
+            self.activate_cli()
+        path = vim_helper.get_current_file_path()
+        # @hey, remove the entire path...?
+        # self.cli_controller.open_in_matlab_editor(path)
+        self.cli_controller.run_code(path)
 
     @neovim.command('MatlabCliActivateControls', sync=True)
     def activate_cli(self):
@@ -173,7 +184,6 @@ class VimMatlab(object):
                     f.write(content)
                     f.truncate()
 
-
     @neovim.command('MatlabOpenTempScript', sync=True, nargs='*')
     def open_temp_matlab_script(self, args):
         dirname = os.path.join(os.path.expanduser('~'), '.vim-matlab/scratch/')
@@ -271,4 +281,3 @@ class VimMatlab(object):
             row_col = vim_helper.get_cursor()
             vim_helper.edit_file(path)
             vim_helper.set_cursor(row_col)
-
