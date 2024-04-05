@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 ##!/usr/bin/env python2
 
+from sys import stdin
+import time
+import threading
+import sys
+import string
+import signal
+import random
+import os
+import socketserver
 __author__ = 'daeyun'
 
 use_pexpect = True
@@ -12,15 +21,6 @@ if use_pexpect:
 if not use_pexpect:
     from subprocess import Popen, PIPE
 
-import socketserver
-import os
-import random
-import signal
-import string
-import sys
-import threading
-import time
-from sys import stdin
 
 hide_until_newline = False
 auto_restart = False
@@ -34,11 +34,14 @@ class Matlab:
     def launch_process(self):
         self.kill()
         if use_pexpect:
-            #self.proc = pexpect.spawn("matlab", env=dict(os.environ),["-nosplash", "-nodesktop"])
+            # self.proc = pexpect.spawn("matlab", env=dict(os.environ),["-nosplash", "-nodesktop"])
             print("loading matlab!\n")
             self.proc = pexpect.spawn(
-                    "/home/kolbbond/build/MATLAB/2023b/bin/matlab -nosplash -nodesktop",
-                    env=os.environ)
+                "/home/kolbbond/build/MATLAB/2023b/bin/matlab -nosplash -nodesktop",
+                env=os.environ)
+            # self.proc = pexpect.spawn(
+            #        "matlab -nosplash -nodesktop",
+            #        env=os.environ)
         else:
             self.proc = Popen(["matlab", "-nosplash", "-nodesktop"], stdin=PIPE,
                               close_fds=True, preexec_fn=os.setsid)
@@ -53,7 +56,8 @@ class Matlab:
         except:
             pass
 
-    def run_code(self, code, run_timer=True):
+# send code to Matlab, run_timer adds extra output
+    def run_code(self, code, run_timer=False):
         num_retry = 0
         rand_var = ''.join(
             random.choice(string.ascii_uppercase) for _ in range(12))
@@ -63,12 +67,15 @@ class Matlab:
                        ",clear('{randvar}');\n").format(randvar=rand_var,
                                                         code=code.strip())
         else:
+            # @hey, some error here with terminating strings ...
+            #print('test')
             command = "{}\n".format(code.strip())
 
         # The maximum number of characters allowed on a single line in Matlab's CLI is 4096.
         delim = ' ...\n'
         line_size = 4095 - len(delim)
-        command = delim.join([command[i:i+line_size] for i in range(0, len(command), line_size)])
+        command = delim.join([command[i:i+line_size]
+                             for i in range(0, len(command), line_size)])
 
         global hide_until_newline
         while num_retry < 3:
@@ -81,7 +88,7 @@ class Matlab:
                     self.proc.stdin.flush()
                 break
             except Exception as ex:
-                print (ex)
+                print(ex)
                 self.launch_process()
                 num_retry += 1
                 time.sleep(1)
@@ -95,7 +102,7 @@ class TCPHandler(socketserver.StreamRequestHandler):
             msg = self.rfile.readline()
             if not msg:
                 break
-            msg = msg.strip().decode("utf-8");
+            msg = msg.strip().decode("utf-8")
             print_flush((msg[:74] + '...') if len(msg) > 74 else msg, end='')
 
             options = {
@@ -139,14 +146,14 @@ def output_filter(output_string):
     global hide_until_newline
     return output_string
     # TODO BROKEN???
-    #if hide_until_newline:
-        #if '\n' in output_string:
-            #hide_until_newline = False
-            #return output_string[output_string.find('\n'):]
-        #else:
-            #return ''
-    #else:
-        #return output_string
+    # if hide_until_newline:
+    # if '\n' in output_string:
+    # hide_until_newline = False
+    # return output_string[output_string.find('\n'):]
+    # else:
+    # return ''
+    # else:
+    # return output_string
 
 
 def input_filter(input_string):
@@ -161,7 +168,8 @@ def input_filter(input_string):
 def forward_input(matlab):
     """Forward stdin to Matlab.proc's stdin."""
     if use_pexpect:
-        matlab.proc.interact(input_filter=input_filter,output_filter=output_filter)
+        matlab.proc.interact(input_filter=input_filter,
+                             output_filter=output_filter)
     else:
         while True:
             matlab.proc.stdin.write(stdin.readline())
