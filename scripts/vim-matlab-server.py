@@ -177,8 +177,8 @@ def forward_input(matlab):
     """Forward stdin to Matlab.proc's stdin."""
     if use_pexpect:
         print("forwarding input\n")
-        #matlab.proc.interact(input_filter=input_filter,
-        #                     output_filter=output_filter)
+        matlab.proc.interact(input_filter=input_filter,
+                             output_filter=output_filter)
     else:
         while True:
             matlab.proc.stdin.write(stdin.readline())
