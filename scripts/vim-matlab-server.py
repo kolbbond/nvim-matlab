@@ -98,8 +98,10 @@ class Matlab:
 
 class TCPHandler(socketserver.StreamRequestHandler):
     def handle(self):
+        print_flush("Starting TCP sockerserver")
         print_flush("New connection: {}".format(self.client_address))
 
+        # game loop
         while True:
             msg = self.rfile.readline()
             if not msg:
@@ -145,8 +147,10 @@ def output_filter(output_string):
     :param output_string: String forwarded from MATLAB's stdout. Provided
     by `pexpect.spawn.interact`.
     :return: The filtered string.
+    @hey, this is what we want. hide the command
     """
     global hide_until_newline
+    print_flush(output_string)
     return output_string
     # TODO BROKEN???
     # if hide_until_newline:
@@ -186,12 +190,14 @@ def start_thread(target=None, args=()):
 
 def print_flush(value, end='\n'):
     """Manually flush the line if using pexpect."""
+    # force writes buffer to terminal
     if use_pexpect:
         value += '\b' * len(value)
     sys.stdout.write(value + end)
     sys.stdout.flush()
 
 
+# entry point
 def main():
     host, port = "localhost", 43889
     socketserver.TCPServer.allow_reuse_address = True
