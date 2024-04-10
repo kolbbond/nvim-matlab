@@ -22,6 +22,7 @@ if not use_pexpect:
     from subprocess import Popen, PIPE
 
 
+# globals
 hide_until_newline = False
 auto_restart = False
 server = None
@@ -175,8 +176,9 @@ def input_filter(input_string):
 def forward_input(matlab):
     """Forward stdin to Matlab.proc's stdin."""
     if use_pexpect:
-        matlab.proc.interact(input_filter=input_filter,
-                             output_filter=output_filter)
+        print("forwarding input\n")
+        #matlab.proc.interact(input_filter=input_filter,
+        #                     output_filter=output_filter)
     else:
         while True:
             matlab.proc.stdin.write(stdin.readline())
