@@ -151,7 +151,7 @@ def output_filter(output_string):
     @hey, this is what we want. hide the command
     """
     global hide_until_newline
-    print_flush(output_string)
+    print(output_string)
     return output_string
     # TODO BROKEN???
     # if hide_until_newline:
