@@ -39,6 +39,9 @@ class VimMatlab(object):
                        r'[a-zA-Z]\w*)((?:[ \t]|\.\.\.[ \t]*\n)*(?:\(|\<|\n|$))')
 
     @neovim.command('MatlabPrintCellLines', sync=True)
+    # useful debug command but there is an error where
+    # ignore_matlab_comments ignores formatting i.e %i
+    # @hey, fix
     def run_print_cell_lines(self):
         lines = vim_helper.get_current_matlab_cell_lines(
             ignore_matlab_comments=True)

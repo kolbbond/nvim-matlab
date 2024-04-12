@@ -6,7 +6,9 @@ vim = None
 
 
 class PythonVimUtils(object):
-    comment_pattern = re.compile(r"(^(?:(?<![\.\w\)\}\]])'[^']*'|[^%]*?)*)(%.*|$)")
+    # regex? ugh
+    comment_pattern = re.compile(
+        r"(^(?:(?<![\.\w\)\}\]])'[^']*'|[^%]*?)*)(%.*|$)")
     cell_header_pattern = re.compile(
         r'(?:^%%(?:[^%]|$)|^[ \t]*?(?<!%)[ \t]*?(?:function|classdef)\s+)')
     ellipsis_pattern = re.compile(r'^(.*[^\s])\s*\.\.\.\s*$')
@@ -72,38 +74,58 @@ class PythonVimUtils(object):
     def echo_text(string):
         vim.command("echo '{}'".format(string.replace("'", r"''")))
 
+    # ignore matlab comments also ignores formatting
     @staticmethod
     def get_current_matlab_cell_lines(ignore_matlab_comments=True):
+
+        # get all in buffer (entire file?)
         lines = PythonVimUtils.get_lines()
+
+        # cursor position determines where cell calculation starts
         crow, _ = PythonVimUtils.get_cursor()
 
+        # search for cell start
         cell_start = crow - 1
         while cell_start > 0:
+
+            # if we match the header pattern
             if PythonVimUtils.cell_header_pattern.match(lines[cell_start]):
                 cell_start += 1
                 break
             cell_start -= 1
 
+        # search for cell end
         cell_end = crow - 1
         while cell_end < len(lines) - 1:
             cell_end += 1
+
+            # find start of next cell
             if PythonVimUtils.cell_header_pattern.match(lines[cell_end]):
                 cell_end -= 1
                 break
 
+        # set lines to run based on found cell
         lines = lines[cell_start:cell_end + 1]
+
+        # ignore matlab comments @hey, don't ignore format strings
         if ignore_matlab_comments:
             return PythonVimUtils.trim_matlab_code(lines)
+
+        # bounce
         return lines
 
+
+    # @hey, this is where the format bug is 
     @staticmethod
     def trim_matlab_code(lines):
         new_lines = []
 
+        # ... determines a continuation of a line
         ellipsis = PythonVimUtils.ellipsis_pattern
 
         is_continuation = False
 
+        # check for comments
         for line in lines:
             line = PythonVimUtils.comment_pattern.sub(r"\1", line).strip()
             if line in ('', '...'):

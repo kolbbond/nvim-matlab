@@ -42,6 +42,8 @@ if g:matlab_auto_mappings
   nnoremap <buffer><silent> <leader>mf :MatlabCliRunFile<CR>
 "  vnoremap <buffer><silent> <C-m> <ESC>:MatlabCliRunSelection<CR>
 "  nnoremap <buffer><silent> <C-m> <ESC>:MatlabCliRunCell<CR>
+  vnoremap <buffer><silent> <leader>rr <ESC>:MatlabCliRunSelection<CR>
+  nnoremap <buffer><silent> <leader>rr <ESC>:MatlabCliRunCell<CR>
   nnoremap <buffer><silent> <C-m> :MatlabCliRunLine<CR>
   nnoremap <buffer><silent> ,i <ESC>:MatlabCliViewVarUnderCursor<CR>
   vnoremap <buffer><silent> ,i <ESC>:MatlabCliViewSelectedVar<CR>
