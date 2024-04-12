@@ -8,7 +8,8 @@ vim = None
 class PythonVimUtils(object):
     # regex? ugh
     comment_pattern = re.compile(
-        r"(^(?:(?<![\.\w\)\}\]])'[^']*'|[^%]*?)*)(%.*|$)")
+        r"(^(?:(?<![\.\w\)\}\]])[\"'][^']*['\"]|[^%]*?)*)(%.*|$)")
+        #r"(^(?:(?<![\.\w\)\}\]])'[^']*'|[^%]*?)*)(%.*|$)")
     cell_header_pattern = re.compile(
         r'(?:^%%(?:[^%]|$)|^[ \t]*?(?<!%)[ \t]*?(?:function|classdef)\s+)')
     ellipsis_pattern = re.compile(r'^(.*[^\s])\s*\.\.\.\s*$')

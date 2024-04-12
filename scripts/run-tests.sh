@@ -3,7 +3,7 @@
 set -o xtrace
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-SRC_ROOT="${DIR}/../rplugin/python"
+SRC_ROOT="${DIR}/../rplugin/python3"
 
 cd ${DIR}/..
 
