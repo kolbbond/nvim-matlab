@@ -23,8 +23,10 @@ else
   let s:split_command = ':vsplit term://'
 endif
 let s:server_command = expand('<sfile>:p:h') . '/../../scripts/vim-matlab-server.py'
+let s:kill_command = expand('<sfile>:p:h') . '/../../scripts/kill-server.sh'
 
 command! MatlabLaunchServer :execute 'normal! ' . s:split_command . s:server_command . '<CR>'
+command! MatlabKillServer :execute 'normal! ' . s:kill_command . '<CR>'
 
 " @hey, is this the override of <CR> to run cell
 command! MatlabNormalModeCreateCell :execute 'normal! :set paste<CR>m`O%%<ESC>``:set nopaste<CR>'
