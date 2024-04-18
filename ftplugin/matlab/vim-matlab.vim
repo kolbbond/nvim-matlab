@@ -22,8 +22,9 @@ elseif g:matlab_server_launcher ==? 'vim' && g:matlab_server_split ==? 'horizont
 else
   let s:split_command = ':vsplit term://'
 endif
+
 let s:server_command = expand('<sfile>:p:h') . '/../../scripts/vim-matlab-server.py'
-let s:kill_command = expand('<sfile>:p:h') . '/../../scripts/kill-server.sh'
+let s:kill_command = expand('<sfile>:p:h') . './../../scripts/kill-process.sh'
 
 command! MatlabLaunchServer :execute 'normal! ' . s:split_command . s:server_command . '<CR>'
 command! MatlabKillServer :execute 'normal! ' . s:kill_command . '<CR>'
@@ -37,6 +38,7 @@ if !exists('g:matlab_auto_mappings')
   let g:matlab_auto_mappings = 1
 endif
 
+" note: <C-m> IS carriage return
 " move these to lua plugin setup
 if g:matlab_auto_mappings
   nnoremap <buffer>         <leader>rn :MatlabRename
@@ -44,9 +46,9 @@ if g:matlab_auto_mappings
   nnoremap <buffer><silent> <leader>mf :MatlabCliRunFile<CR>
 "  vnoremap <buffer><silent> <C-m> <ESC>:MatlabCliRunSelection<CR>
 "  nnoremap <buffer><silent> <C-m> <ESC>:MatlabCliRunCell<CR>
-  vnoremap <buffer><silent> <leader>rr <ESC>:MatlabCliRunSelection<CR>
+  vnoremap <buffer><silent> <leader>rs <ESC>:MatlabCliRunSelection<CR>
   nnoremap <buffer><silent> <leader>rr <ESC>:MatlabCliRunCell<CR>
-  nnoremap <buffer><silent> <C-m> :MatlabCliRunLine<CR>
+ nnoremap <buffer><silent> <C-m> :MatlabCliRunLine<CR>
   nnoremap <buffer><silent> ,i <ESC>:MatlabCliViewVarUnderCursor<CR>
   vnoremap <buffer><silent> ,i <ESC>:MatlabCliViewSelectedVar<CR>
   nnoremap <buffer><silent> ,h <ESC>:MatlabCliHelp<CR>

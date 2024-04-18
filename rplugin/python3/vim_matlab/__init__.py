@@ -84,9 +84,11 @@ class VimMatlab(object):
         if self.cli_controller is None:
             self.activate_cli()
         path = vim_helper.get_current_file_path()
+
+        # debug
+        # print(["edit '{}';".format(path)])
         # @hey, remove the entire path...?
-        # self.cli_controller.open_in_matlab_editor(path)
-        self.cli_controller.run_code(path)
+        self.cli_controller.run_code(["run('{}');".format(path)])
 
     @neovim.command('MatlabCliActivateControls', sync=True)
     def activate_cli(self):
