@@ -1,6 +1,20 @@
-vim-matlab
+nvim-matlab
 ===========
 
+forked and updated for nvim with python3
+
+updates
+* updated for python3
+* fixed parsing of " and ' (specifically with format strings)
+1. MatlabCliRunFile - run the entire file command
+2. MatlabKillServer - command to kill the server
+
+todo
+1. remove commands when run (only show output)
+
+
+Everything below is from original repo
+--------------------------------------------------
 An alternative to Matlab's default editor for Vim users.
 
 ## FAQ
