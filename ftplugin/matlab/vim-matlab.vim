@@ -24,10 +24,17 @@ else
 endif
 
 let s:server_command = expand('<sfile>:p:h') . '/../../scripts/vim-matlab-server.py'
-let s:kill_command = expand('<sfile>:p:h') . './../../scripts/kill-process.sh'
+let s:kill_command = expand('<sfile>:p:h') . '/../../scripts/kill-process.sh'
+let g:kill_command = expand('<sfile>:p:h') . '/../../scripts/kill-process.sh'
 
+" ...this only works because the :! is included in "s:split_command"
 command! MatlabLaunchServer :execute 'normal! ' . s:split_command . s:server_command . '<CR>'
-command! MatlabKillServer :execute 'normal! ' . s:kill_command . '<CR>'
+
+" kill server command, note the included ":!" to run the command
+command! MatlabKillServer :execute 'normal! :!' . s:kill_command . '<CR>'
+
+" this prints IN our file
+"command! MatlabKillServer :execute 'normal! echo ' . s:kill_command . '<CR>'
 
 " @hey, is this the override of <CR> to run cell
 command! MatlabNormalModeCreateCell :execute 'normal! :set paste<CR>m`O%%<ESC>``:set nopaste<CR>'
