@@ -37,8 +37,15 @@ class Matlab:
         if use_pexpect:
             # self.proc = pexpect.spawn("matlab", env=dict(os.environ),["-nosplash", "-nodesktop"])
             print("loading matlab!\n")
+
+            # use matlab env path
+            mpath = os.environ['Matlab_ROOT_DIR'] + "/bin/matlab"
+           # self.proc = pexpect.spawn(
+           #     "/home/kolbbond/build/MATLAB/2023b/bin/matlab -nosplash -nodesktop",
+           #     env=os.environ)
+           #
             self.proc = pexpect.spawn(
-                "/home/kolbbond/build/MATLAB/2023b/bin/matlab -nosplash -nodesktop",
+                mpath + " -nosplash -nodesktop",
                 env=os.environ)
             # self.proc = pexpect.spawn(
             #        "matlab -nosplash -nodesktop",
@@ -61,7 +68,7 @@ class Matlab:
     def run_code(self, code, run_timer=False):
         num_retry = 0
         rand_var = ''.join(
-                random.choice(string.ascii_uppercase) for _ in range(12))
+            random.choice(string.ascii_uppercase) for _ in range(12))
 
         # this runs a timer for each matlab code
         # can we separate to avoid convolution of our command line
@@ -151,7 +158,7 @@ def output_filter(output_string):
     @hey, this is what we want. hide the command
     """
     global hide_until_newline
-    #print(output_string)
+    # print(output_string)
     return output_string
     # TODO BROKEN???
     # if hide_until_newline:
