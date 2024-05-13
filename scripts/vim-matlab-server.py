@@ -35,21 +35,14 @@ class Matlab:
     def launch_process(self):
         self.kill()
         if use_pexpect:
-            # self.proc = pexpect.spawn("matlab", env=dict(os.environ),["-nosplash", "-nodesktop"])
             print("loading matlab!\n")
 
             # use matlab env path
             mpath = os.environ['Matlab_ROOT_DIR'] + "/bin/matlab"
-           # self.proc = pexpect.spawn(
-           #     "/home/kolbbond/build/MATLAB/2023b/bin/matlab -nosplash -nodesktop",
-           #     env=os.environ)
-           #
             self.proc = pexpect.spawn(
                 mpath + " -nosplash -nodesktop",
                 env=os.environ)
-            # self.proc = pexpect.spawn(
-            #        "matlab -nosplash -nodesktop",
-            #        env=os.environ)
+
         else:
             self.proc = Popen(["matlab", "-nosplash", "-nodesktop"], stdin=PIPE,
                               close_fds=True, preexec_fn=os.setsid)
