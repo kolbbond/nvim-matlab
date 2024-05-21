@@ -4,6 +4,10 @@
 
 forked and updated for nvim with python3
 
+## New Commands
+1. MatlabCliRunFile - run the entire file command
+2. MatlabKillServer - command to kill the server
+
 updates
 * updated for python3
 * fixed parsing of " and ' (specifically with format strings)
@@ -13,14 +17,13 @@ if you have an issue with finding matlab, try setting the env variable
     ` export Matlab_ROOT_DIR=/path/to `
 if you use cmake and matlab this will already be set.
 
-## New Commands
-1. MatlabCliRunFile - run the entire file command
-2. MatlabKillServer - command to kill the server
 
 ## todo
 1. remove commands when run (only show output)
 2. fix RunSelection
 3. stop run at return when running sections
+4. comment parsing
+    * block comments ` %{  ... %} ` and comments into ellipses are not parsed correctly
 
 
 Everything below is from original repo
