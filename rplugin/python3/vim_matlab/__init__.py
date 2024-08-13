@@ -32,6 +32,8 @@ class VimMatlab(object):
         self.cli_controller = None
         self.buffer_state = collections.defaultdict(dict)
 
+        print("startup vim matlab");
+
         self.function_name_pattern = \
             re.compile(r'((?:^|\n[ \t]*)(?!%)[ \t]*(?:function(?:[ \t]|\.\.\.'
                        r'[ \t]*\n)(?:[^\(\n]|\.\.\.[ \t]*\n)*?|classdef(?:[ \t]'
