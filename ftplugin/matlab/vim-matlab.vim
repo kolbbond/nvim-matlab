@@ -1,5 +1,5 @@
 " these are vimscript command remaps
-" @hey, move these to lua
+" @hey: move these to lua
 
 setlocal shortmess+=A
 setlocal formatoptions-=cro
@@ -16,7 +16,7 @@ endif
 if g:matlab_server_launcher ==? 'tmux' && g:matlab_server_split ==? 'horizontal'
   let s:split_command = ':!tmux split-window '
 elseif g:matlab_server_launcher ==? 'tmux' && g:matlab_server_split ==? 'vertical'
-  let s:split_command = ':!tmux split-window -h '
+  let s:split_command = ':!tmux split-window -h -p 35'
 elseif g:matlab_server_launcher ==? 'vim' && g:matlab_server_split ==? 'horizontal'
   let s:split_command = ':split term://'
 else
