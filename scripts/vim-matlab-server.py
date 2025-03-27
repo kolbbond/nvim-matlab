@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-##!/usr/bin/env python2
 
 from sys import stdin
 import time
