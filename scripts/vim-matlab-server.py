@@ -37,6 +37,7 @@ class Matlab:
             print("loading matlab!\n")
 
             # use matlab env path
+            # @hey: add octave support
             mpath = os.environ['Matlab_ROOT_DIR'] + "/bin/matlab"
             self.proc = pexpect.spawn(
                 mpath + " -nosplash -nodesktop",

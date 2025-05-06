@@ -35,6 +35,9 @@ command! MatlabLaunchServer :execute 'normal! ' . s:split_command . s:server_com
 " kill server command, note the included ":!" to run the command
 command! MatlabKillServer :execute 'normal! :!' . s:kill_command . '<CR>'
 
+" restart command
+command! MatlabRestartServer :execute "MatlabKillServer" | execute "MatlabLaunchServer"
+
 " this prints IN our file
 "command! MatlabKillServer :execute 'normal! echo ' . s:kill_command . '<CR>'
 
