@@ -30,7 +30,11 @@ let s:kill_command = expand('<sfile>:p:h') . '/../../scripts/kill-process.sh'
 let g:kill_command = expand('<sfile>:p:h') . '/../../scripts/kill-process.sh'
 
 " ...this only works because the :! is included in "s:split_command"
+" for debug launch the tmux window and the above server command manually
+command! MatlabDebugSplit :execute 'normal! ' . s:split_command . '<CR>'
+command! MatlabDebugServer :execute 'normal! ' . s:server_command . '<CR>'
 command! MatlabLaunchServer :execute 'normal! ' . s:split_command . s:server_command . '<CR>'
+"command! MatlabLaunchServer :execute 'normal! ' . s:split_command . '<CR>'
 
 " kill server command, note the included ":!" to run the command
 command! MatlabKillServer :execute 'normal! :!' . s:kill_command . '<CR>'
